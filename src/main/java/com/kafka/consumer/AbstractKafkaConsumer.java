@@ -20,14 +20,6 @@ public abstract class AbstractKafkaConsumer implements KafkaConsumer {
 
 	protected SparkJobSubmitter sparkJobSubmitter;
 
-	public SparkJobSubmitter getSparkJobSubmitter() {
-		return this.sparkJobSubmitter;
-	}
-
-	public void setSparkJobSubmitter(final SparkJobSubmitter sparkJobSubmitter) {
-		this.sparkJobSubmitter = sparkJobSubmitter;
-	}
-
 	@Override
 	public void consume() {
 		new Thread(() -> {
@@ -75,5 +67,13 @@ public abstract class AbstractKafkaConsumer implements KafkaConsumer {
 
 	public void setConsumerConnector(final ConsumerConnector consumerConnector) {
 		this.consumerConnector = consumerConnector;
+	}
+
+	public SparkJobSubmitter getSparkJobSubmitter() {
+		return this.sparkJobSubmitter;
+	}
+
+	public void setSparkJobSubmitter(final SparkJobSubmitter sparkJobSubmitter) {
+		this.sparkJobSubmitter = sparkJobSubmitter;
 	}
 }

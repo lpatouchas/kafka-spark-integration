@@ -15,7 +15,7 @@
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<kafka.version>0.8.2.0</kafka.version>
 		<javax.version>3.1.0</javax.version>
-		<junit.version>3.8.1</junit.version>
+		<junit.version>4.12</junit.version>
 		<spark.version>1.5.1</spark.version>
 	</properties>
 	<dependencies>
@@ -23,7 +23,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -35,12 +34,6 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
