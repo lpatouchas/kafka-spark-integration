@@ -7,7 +7,7 @@
    http://www.springframework.org/schema/context/spring-context-3.0.xsd
    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<bean id="job1" class="com.spark.submitter.rest.CreateSubmissionRequest">
+	<bean id="job1" class="com.spark.submitter.rest.objects.CreateSubmissionRequest">
 		<property name="action" value="CreateSubmissionRequest"></property>
 		<property name="appResource" value="file:/spark-1.5.1/bin/myJars/spark-playroom-1.0-jar-with-dependencies.jar"></property>
 		<property name="clientSparkVersion" value="1.5.1"></property>
@@ -16,11 +16,11 @@
 		<property name="sparkProperties" ref="job1SparkProps"></property>
 	</bean>
 
-	<bean id="job1EnvVars" class="com.spark.submitter.rest.SparkEvniromentalVariables">
+	<bean id="job1EnvVars" class="com.spark.submitter.rest.objects.SparkEvniromentalVariables">
 		<property name="sparkHome" value="D:\\\\spark-1.5.1\\"></property>
 	</bean>
 
-	<bean id="job1SparkProps" class="com.spark.submitter.rest.SparkProperties">
+	<bean id="job1SparkProps" class="com.spark.submitter.rest.objects.SparkProperties">
 		<property name="appName" value="Play Room"></property>
 		<property name="deployMode" value="cluster"></property>
 		<property name="driverSupervise" value="true"></property>

@@ -25,6 +25,8 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 
 	private CreateSubmissionRequest createSubmissionRequest;
 
+	private String outputTopic;
+
 	@Autowired
 	private KafkaProducer kafkaProducer;
 
@@ -64,7 +66,7 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 	private void informKafka(final SubmissionStatusResponse ssr) {
 		if (SparkDriverState.FINISHED.equals(ssr.getDriverState())) {
 			this.logger.info("Job finished succesfully, informing kafka");
-			this.kafkaProducer.send("test-rep-topic", "key", "job1 finished succesffuly");
+			this.kafkaProducer.send(this.outputTopic, "key", "job1 finished succesffuly");
 		} else if (SparkDriverState.ERROR.equals(ssr.getDriverState())) {
 			// TODO do something in case of erroneous job
 		}
@@ -77,6 +79,10 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 	@Override
 	public String getMainClass() {
 		return this.createSubmissionRequest.getMainClass();
+	}
+
+	public void setOutputTopic(final String outputTopic) {
+		this.outputTopic = outputTopic;
 	}
 
 }

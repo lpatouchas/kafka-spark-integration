@@ -13,7 +13,7 @@
 
 	<import resource="sparkJobs.xml" />
 
-	<bean id="consumerConfig" class="kafka.consumer.ConsumerConfig">
+	<bean id="restConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
 			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 				<!-- Properties for defining consumer configurations -->
@@ -38,16 +38,17 @@
 	
 	<bean id="restSubmitter" class="com.spark.submitter.rest.SparkRestJobSubmmiter">
 		<property name="createSubmissionRequest" ref="job1"></property>
+		<property name="outputTopic" value="rest-topic-output"></property>
 	</bean>
 	
-	<bean id="messageConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
-		<property name="topic" value="partitioned-topic"></property>
-		<property name="consumerConfig" ref="consumerConfig"></property>
+	<bean id="restConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
+		<property name="topic" value="rest-topic-input"></property>
+		<property name="consumerConfig" ref="restConsumerConfig"></property>
 		<property name="sparkJobSubmitter" ref="restSubmitter"></property>
 	</bean>
 	
 	
-	<!-- <bean id="consumerConfig2" class="kafka.consumer.ConsumerConfig">
+	<!-- <bean id="javaConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
 			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 				Properties for defining consumer configurations
@@ -62,8 +63,8 @@
 		</constructor-arg>
 	</bean>
 	
-	<bean id="messageConsumer2" class="com.kafka.consumer.KafkaConsumerImpl">
-		<property name="topic" value="cross-machine-topic"></property>
-		<property name="consumerConfig" ref="consumerConfig2"></property>
+	<bean id="javaConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
+		<property name="topic" value="java-topic-input"></property>
+		<property name="consumerConfig" ref="javaConsumerConfig"></property>
 	</bean> -->
 </beans>
