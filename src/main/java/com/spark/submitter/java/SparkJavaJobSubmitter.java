@@ -1,8 +1,10 @@
-package com.spark.submitter;
+package com.spark.submitter.java;
 
 import org.apache.spark.launcher.SparkLauncher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.spark.submitter.SparkJobSubmitter;
 
 public class SparkJavaJobSubmitter implements SparkJobSubmitter {
 

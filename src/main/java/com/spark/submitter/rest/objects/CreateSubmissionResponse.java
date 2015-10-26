@@ -1,4 +1,4 @@
-package com.spark.submitter.rest;
+package com.spark.submitter.rest.objects;
 
 public class CreateSubmissionResponse {
 

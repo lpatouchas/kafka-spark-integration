@@ -9,6 +9,9 @@
    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<context:component-scan base-package="com.kafka.service" />
+	<context:component-scan base-package="com.kafka.producer" />
+
+	<import resource="sparkJobs.xml" />
 
 	<bean id="consumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
@@ -25,7 +28,7 @@
 		</constructor-arg>
 	</bean>
 	
-	<!-- <bean id="javaSubmitter" class="com.spark.submitter.SparkJavaJobSubmitter">
+	<!-- <bean id="javaSubmitter" class="com.spark.submitter.java.SparkJavaJobSubmitter">
 		<property name="appResource" value="D:\\source\\spark-playroom\\target\\spark-playroom-1.0-jar-with-dependencies.jar"></property>
 		<property name="deployMode" value="cluster"></property>
 		<property name="sparkMaster" value="spark://170.118.146.163:7077"></property>
@@ -33,7 +36,7 @@
 		<property name="sparkHome" value="D:\\spark-1.5.1"></property>
 	</bean> -->
 	
-	<bean id="restSubmitter" class="com.spark.submitter.SparkRestJobSubmmiter">
+	<bean id="restSubmitter" class="com.spark.submitter.rest.SparkRestJobSubmmiter">
 		<property name="createSubmissionRequest" ref="job1"></property>
 	</bean>
 	
@@ -43,27 +46,6 @@
 		<property name="sparkJobSubmitter" ref="restSubmitter"></property>
 	</bean>
 	
-	<bean id="job1" class="com.spark.submitter.rest.CreateSubmissionRequest">
-		<property name="action" value="CreateSubmissionRequest"></property>
-		<property name="appResource" value="file:/spark-1.5.1/bin/myJars/spark-playroom-1.0-jar-with-dependencies.jar"></property>
-		<property name="clientSparkVersion" value="1.5.1"></property>
-		<property name="mainClass" value="gr.patouchas.spark.SimpleExample2"></property>
-		<property name="environmentVariables" ref="job1EnvVars"></property>
-		<property name="sparkProperties" ref="job1SparkProps"></property>
-	</bean>
-	
-	<bean id="job1EnvVars" class="com.spark.submitter.rest.SparkEvniromentalVariables">
-		<property name="sparkHome" value="D:\\\\spark-1.5.1\\"></property>
-	</bean>
-	
-	<bean id="job1SparkProps" class="com.spark.submitter.rest.SparkProperties">
-		<property name="appName" value="Play Room"></property>
-		<property name="deployMode" value="cluster"></property>
-		<property name="driverSupervise" value="true"></property>
-		<property name="eventLogEnabled" value="true"></property>
-		<property name="jars" value="file:/spark-1.5.1/bin/myJars/spark-playroom-1.0-jar-with-dependencies.jar"></property>
-		<property name="master" value="spark://170.118.146.163:7077"></property>
-	</bean>
 	
 	<!-- <bean id="consumerConfig2" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>

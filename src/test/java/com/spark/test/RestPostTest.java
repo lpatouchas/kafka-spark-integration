@@ -8,9 +8,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spark.submitter.rest.CreateSubmissionRequest;
-import com.spark.submitter.rest.SparkEvniromentalVariables;
-import com.spark.submitter.rest.SparkProperties;
+import com.spark.submitter.rest.objects.CreateSubmissionRequest;
+import com.spark.submitter.rest.objects.SparkEvniromentalVariables;
+import com.spark.submitter.rest.objects.SparkProperties;
 
 public class RestPostTest {
 
