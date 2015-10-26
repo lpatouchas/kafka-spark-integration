@@ -2,7 +2,7 @@ package com.spark.submitter.rest.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SparkEvniromentalVariables {
+public class SparkRestJobConfigurationEnvVars {
 
 	@JsonProperty(value = "SPARK_HOME")
 	private String sparkHome;

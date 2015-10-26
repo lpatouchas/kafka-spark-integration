@@ -5,29 +5,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.spark.submitter.SparkJobSubmitter;
+import com.spark.submitter.java.objects.SparkJavaJobConfiguration;
 
 public class SparkJavaJobSubmitter implements SparkJobSubmitter {
 
 	private final Logger logger = LoggerFactory.getLogger(SparkJobSubmitter.class);
 
-	private String appResource; // D:\\source\\spark-playroom\\target\\spark-playroom-1.0-jar-with-dependencies.jar
-
-	private String deployMode; // cluster
-
-	private String sparkMaster; // spark://170.118.146.163:7077
-
-	private String mainClass; // gr.patouchas.spark.SimpleExample3
-
-	private String sparkHome; // D:\\spark-1.5.1
+	private SparkJavaJobConfiguration jobConfig;
 
 	@Override
 	public void submitJob() throws Exception {
 		final Process spark = new SparkLauncher()//
-						.setAppResource(this.appResource)//
-						.setDeployMode(this.deployMode)//
-						.setMaster(this.sparkMaster)//
-						.setMainClass(this.mainClass)//
-						.setSparkHome(this.sparkHome)//
+						.setAppResource(this.jobConfig.getAppResource())//
+						.setDeployMode(this.jobConfig.getDeployMode())//
+						.setMaster(this.jobConfig.getSparkMaster())//
+						.setMainClass(this.jobConfig.getMainClass())//
+						.setSparkHome(this.jobConfig.getSparkHome())//
 						.launch();
 
 		final InputStreamReaderRunnable inputStreamReaderRunnable = new InputStreamReaderRunnable(spark.getInputStream(), "input");
@@ -43,45 +36,12 @@ public class SparkJavaJobSubmitter implements SparkJobSubmitter {
 		this.logger.info("Finished! Exit code:" + exitCode);
 	}
 
-	public String getAppResource() {
-		return this.appResource;
-	}
-
-	public void setAppResource(final String appResource) {
-		this.appResource = appResource;
-	}
-
-	public String getDeployMode() {
-		return this.deployMode;
-	}
-
-	public void setDeployMode(final String deployMode) {
-		this.deployMode = deployMode;
-	}
-
-	public String getSparkMaster() {
-		return this.sparkMaster;
-	}
-
-	public void setSparkMaster(final String sparkMaster) {
-		this.sparkMaster = sparkMaster;
-	}
-
-	public String getSparkHome() {
-		return this.sparkHome;
-	}
-
-	public void setSparkHome(final String sparkHome) {
-		this.sparkHome = sparkHome;
+	public void setJobConfig(final SparkJavaJobConfiguration jobConfig) {
+		this.jobConfig = jobConfig;
 	}
 
 	@Override
 	public String getMainClass() {
-		return this.mainClass;
+		return this.jobConfig.getMainClass();
 	}
-
-	public void setMainClass(final String mainClass) {
-		this.mainClass = mainClass;
-	}
-
 }

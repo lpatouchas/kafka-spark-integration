@@ -2,7 +2,7 @@ package com.spark.submitter.rest.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SparkProperties {
+public class SparkRestJobConfigurationProperties {
 
 	@JsonProperty(value = "spark.jars")
 	private String jars;

@@ -1,6 +1,6 @@
 package com.spark.submitter.rest.objects;
 
-public class CreateSubmissionResponse {
+public class SparkRestJobResponse {
 
 	private String action;
 

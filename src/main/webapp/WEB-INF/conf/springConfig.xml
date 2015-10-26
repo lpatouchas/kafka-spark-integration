@@ -11,7 +11,7 @@
 	<context:component-scan base-package="com.kafka.service" />
 	<context:component-scan base-package="com.kafka.producer" />
 
-	<import resource="sparkJobs.xml" />
+	<import resource="sparkJobConfig.xml" />
 
 	<bean id="restConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
@@ -20,21 +20,13 @@
 				<property name="properties">
 					<props>
 						<prop key="zookeeper.connect">localhost:2181</prop>
-						<prop key="group.id">spring_consumer</prop>
+						<prop key="group.id">spring_rest_consumer</prop>
 						<prop key="auto.commit.enable">false</prop>
 					</props>
 				</property>
 			</bean>
 		</constructor-arg>
 	</bean>
-	
-	<!-- <bean id="javaSubmitter" class="com.spark.submitter.java.SparkJavaJobSubmitter">
-		<property name="appResource" value="D:\\source\\spark-playroom\\target\\spark-playroom-1.0-jar-with-dependencies.jar"></property>
-		<property name="deployMode" value="cluster"></property>
-		<property name="sparkMaster" value="spark://170.118.146.163:7077"></property>
-		<property name="mainClass" value="gr.patouchas.spark.SimpleExample2"></property>
-		<property name="sparkHome" value="D:\\spark-1.5.1"></property>
-	</bean> -->
 	
 	<bean id="restSubmitter" class="com.spark.submitter.rest.SparkRestJobSubmmiter">
 		<property name="createSubmissionRequest" ref="job1"></property>
@@ -47,15 +39,19 @@
 		<property name="sparkJobSubmitter" ref="restSubmitter"></property>
 	</bean>
 	
+	<!--  JAVA consumer -->
+	<bean id="javaSubmitter" class="com.spark.submitter.java.SparkJavaJobSubmitter">
+		<property name="jobConfig" ref="javaJob1"></property>
+	</bean>
 	
-	<!-- <bean id="javaConsumerConfig" class="kafka.consumer.ConsumerConfig">
+	<bean id="javaConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
 			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-				Properties for defining consumer configurations
+ 				<!--Properties for defining consumer configurations -->
 				<property name="properties">
 					<props>
 						<prop key="zookeeper.connect">localhost:2181</prop>
-						<prop key="group.id">spring_consumer2</prop>
+						<prop key="group.id">spring_java_consumer</prop>
 						<prop key="auto.commit.enable">false</prop>
 					</props>
 				</property>
@@ -66,5 +62,6 @@
 	<bean id="javaConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
 		<property name="topic" value="java-topic-input"></property>
 		<property name="consumerConfig" ref="javaConsumerConfig"></property>
-	</bean> -->
+		<property name="sparkJobSubmitter" ref="javaSubmitter"></property>
+	</bean>
 </beans>

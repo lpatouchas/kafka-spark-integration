@@ -10,10 +10,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kafka.producer.KafkaProducer;
 import com.spark.submitter.SparkJobSubmitter;
-import com.spark.submitter.rest.objects.CreateSubmissionRequest;
-import com.spark.submitter.rest.objects.CreateSubmissionResponse;
+import com.spark.submitter.rest.objects.SparkRestJobConfiguration;
+import com.spark.submitter.rest.objects.SparkRestJobResponse;
 import com.spark.submitter.rest.objects.SparkDriverState;
-import com.spark.submitter.rest.objects.SubmissionStatusResponse;
+import com.spark.submitter.rest.objects.SparkJobStatusResponse;
 
 public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 
@@ -23,7 +23,7 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 
 	private static final String JOB_STATUS_URL = "http://170.118.146.163:6066/v1/submissions/status/";
 
-	private CreateSubmissionRequest createSubmissionRequest;
+	private SparkRestJobConfiguration createSubmissionRequest;
 
 	private String outputTopic;
 
@@ -34,25 +34,25 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 	public void submitJob() throws Exception {
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		final HttpEntity<CreateSubmissionRequest> request = new HttpEntity<>(this.createSubmissionRequest, headers);
+		final HttpEntity<SparkRestJobConfiguration> request = new HttpEntity<>(this.createSubmissionRequest, headers);
 
 		final RestTemplate restTemplate = new RestTemplate();
-		final CreateSubmissionResponse createSubmissionResponse = restTemplate.postForObject(SparkRestJobSubmmiter.JOB_SUBMISSION_URL, request,
-						CreateSubmissionResponse.class);
+		final SparkRestJobResponse createSubmissionResponse = restTemplate.postForObject(SparkRestJobSubmmiter.JOB_SUBMISSION_URL, request,
+						SparkRestJobResponse.class);
 
-		final SubmissionStatusResponse ssr = this.monitorSubmittedJob(restTemplate, createSubmissionResponse);
+		final SparkJobStatusResponse ssr = this.monitorSubmittedJob(restTemplate, createSubmissionResponse);
 
 		System.out.println(ssr);
 		this.informKafka(ssr);
 
 	}
 
-	private SubmissionStatusResponse monitorSubmittedJob(final RestTemplate restTemplate, final CreateSubmissionResponse createSubmissionResponse)
+	private SparkJobStatusResponse monitorSubmittedJob(final RestTemplate restTemplate, final SparkRestJobResponse createSubmissionResponse)
 					throws InterruptedException {
-		SubmissionStatusResponse ssr = null;
+		SparkJobStatusResponse ssr = null;
 		do {
 			ssr = restTemplate.getForObject(SparkRestJobSubmmiter.JOB_STATUS_URL + createSubmissionResponse.getSubmissionId(),
-							SubmissionStatusResponse.class);
+							SparkJobStatusResponse.class);
 			if (SparkDriverState.RUNNING.equals(ssr.getDriverState())) {
 				System.out.println("Job Still Running");
 				this.logger.info("Job Still Running");
@@ -63,7 +63,7 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 		return ssr;
 	}
 
-	private void informKafka(final SubmissionStatusResponse ssr) {
+	private void informKafka(final SparkJobStatusResponse ssr) {
 		if (SparkDriverState.FINISHED.equals(ssr.getDriverState())) {
 			this.logger.info("Job finished succesfully, informing kafka");
 			this.kafkaProducer.send(this.outputTopic, "key", "job1 finished succesffuly");
@@ -72,7 +72,7 @@ public class SparkRestJobSubmmiter implements SparkJobSubmitter {
 		}
 	}
 
-	public void setCreateSubmissionRequest(final CreateSubmissionRequest createSubmissionRequest) {
+	public void setCreateSubmissionRequest(final SparkRestJobConfiguration createSubmissionRequest) {
 		this.createSubmissionRequest = createSubmissionRequest;
 	}
 

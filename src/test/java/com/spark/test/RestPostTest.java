@@ -8,9 +8,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spark.submitter.rest.objects.CreateSubmissionRequest;
-import com.spark.submitter.rest.objects.SparkEvniromentalVariables;
-import com.spark.submitter.rest.objects.SparkProperties;
+import com.spark.submitter.rest.objects.SparkRestJobConfiguration;
+import com.spark.submitter.rest.objects.SparkRestJobConfigurationEnvVars;
+import com.spark.submitter.rest.objects.SparkRestJobConfigurationProperties;
 
 public class RestPostTest {
 
@@ -20,16 +20,16 @@ public class RestPostTest {
 	public void test() throws InterruptedException, JsonProcessingException {
 		final ObjectMapper m = new ObjectMapper();
 
-		final CreateSubmissionRequest createSubmissionRequest = new CreateSubmissionRequest();
+		final SparkRestJobConfiguration createSubmissionRequest = new SparkRestJobConfiguration();
 		createSubmissionRequest.setAction("CreateSubmissionRequest");
 		createSubmissionRequest.setAppResource("file:/spark-1.5.1/bin/myJars/spark-playroom-1.0-jar-with-dependencies.jar");
 		createSubmissionRequest.setClientSparkVersion("1.5.1");
 		createSubmissionRequest.setMainClass("gr.patouchas.spark.SimpleExample2");
-		final SparkEvniromentalVariables environmentVariables = new SparkEvniromentalVariables();
+		final SparkRestJobConfigurationEnvVars environmentVariables = new SparkRestJobConfigurationEnvVars();
 		environmentVariables.setSparkHome("D:\\\\spark-1.5.1\\");
 		createSubmissionRequest.setEnvironmentVariables(environmentVariables);
 
-		final SparkProperties sparkProperties = new SparkProperties();
+		final SparkRestJobConfigurationProperties sparkProperties = new SparkRestJobConfigurationProperties();
 		sparkProperties.setAppName("Play Room");
 		sparkProperties.setDeployMode("cluster");
 		sparkProperties.setDriverSupervise(Boolean.TRUE);

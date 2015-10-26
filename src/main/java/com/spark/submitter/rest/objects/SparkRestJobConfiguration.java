@@ -1,6 +1,6 @@
 package com.spark.submitter.rest.objects;
 
-public class CreateSubmissionRequest {
+public class SparkRestJobConfiguration {
 
 	private String action;
 
@@ -8,11 +8,11 @@ public class CreateSubmissionRequest {
 
 	private String clientSparkVersion;
 
-	private SparkEvniromentalVariables environmentVariables;
+	private SparkRestJobConfigurationEnvVars environmentVariables;
 
 	private String mainClass;
 
-	private SparkProperties sparkProperties;
+	private SparkRestJobConfigurationProperties sparkProperties;
 
 	public String getAction() {
 		return this.action;
@@ -42,11 +42,11 @@ public class CreateSubmissionRequest {
 		this.clientSparkVersion = clientSparkVersion;
 	}
 
-	public SparkEvniromentalVariables getEnvironmentVariables() {
+	public SparkRestJobConfigurationEnvVars getEnvironmentVariables() {
 		return this.environmentVariables;
 	}
 
-	public void setEnvironmentVariables(final SparkEvniromentalVariables environmentVariables) {
+	public void setEnvironmentVariables(final SparkRestJobConfigurationEnvVars environmentVariables) {
 		this.environmentVariables = environmentVariables;
 	}
 
@@ -58,11 +58,11 @@ public class CreateSubmissionRequest {
 		this.mainClass = mainClass;
 	}
 
-	public SparkProperties getSparkProperties() {
+	public SparkRestJobConfigurationProperties getSparkProperties() {
 		return this.sparkProperties;
 	}
 
-	public void setSparkProperties(final SparkProperties sparkProperties) {
+	public void setSparkProperties(final SparkRestJobConfigurationProperties sparkProperties) {
 		this.sparkProperties = sparkProperties;
 	}
 
