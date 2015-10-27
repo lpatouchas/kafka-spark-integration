@@ -25,7 +25,8 @@ public class KafkaConsumerService {
 
 			this.registeredConsumers.stream().forEach(entry -> { //
 				entry.consume(); //
-				this.logger.info("Starting consumer for topic id :: {}", new Object[] { entry.getTopic() });//
+				System.out.println("Started consumer for topic :: " + entry.getTopic());
+				this.logger.info("Started consumer for topic  {}", new Object[] { entry.getTopic() });//
 			});
 
 		} else {

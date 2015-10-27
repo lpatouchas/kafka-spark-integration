@@ -28,6 +28,8 @@
 		<property name="eventLogEnabled" value="true"></property>
 		<property name="jars" value="file:/source/spark-playroom/target/spark-playroom-1.0-jar-with-dependencies.jar"></property>
 		<property name="master" value="spark://170.118.146.163:7077"></property>
+		<property name="cores" value="1"></property>
+		<property name="memory" value="1G"></property>
 	</bean>
 	
 	<!-- Java Job Configuration -->

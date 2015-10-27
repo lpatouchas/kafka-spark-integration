@@ -30,7 +30,7 @@ public abstract class AbstractKafkaConsumer implements KafkaConsumer {
 					if (AbstractKafkaConsumer.this.consumerConnector != null) {
 						break;
 					} else {
-						Thread.sleep(180000l);
+						Thread.sleep(18000l);
 					}
 				} catch (final Exception e) {
 					AbstractKafkaConsumer.this.logger.error("Could not connect to consumer for topic id :: {}",

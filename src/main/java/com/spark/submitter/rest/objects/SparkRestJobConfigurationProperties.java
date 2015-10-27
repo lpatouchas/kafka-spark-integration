@@ -22,6 +22,12 @@ public class SparkRestJobConfigurationProperties {
 	@JsonProperty(value = "spark.master")
 	private String master;
 
+	@JsonProperty(value = "spark.cores.max")
+	private String cores;
+
+	@JsonProperty(value = "spark.executor.memory")
+	private String memory;
+
 	public String getJars() {
 		return this.jars;
 	}
@@ -68,6 +74,22 @@ public class SparkRestJobConfigurationProperties {
 
 	public void setMaster(final String master) {
 		this.master = master;
+	}
+
+	public String getCores() {
+		return this.cores;
+	}
+
+	public void setCores(final String cores) {
+		this.cores = cores;
+	}
+
+	public String getMemory() {
+		return this.memory;
+	}
+
+	public void setMemory(final String memory) {
+		this.memory = memory;
 	}
 
 }
