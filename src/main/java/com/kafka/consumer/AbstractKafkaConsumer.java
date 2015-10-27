@@ -3,7 +3,7 @@ package com.kafka.consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.spark.submitter.SparkJobSubmitter;
+import com.spark.submitter.KafkaMessageHandler;
 
 import kafka.consumer.ConsumerConfig;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -18,7 +18,7 @@ public abstract class AbstractKafkaConsumer implements KafkaConsumer {
 
 	protected ConsumerConnector consumerConnector;
 
-	protected SparkJobSubmitter sparkJobSubmitter;
+	protected KafkaMessageHandler kafkaMessageHandler;
 
 	@Override
 	public void consume() {
@@ -69,11 +69,11 @@ public abstract class AbstractKafkaConsumer implements KafkaConsumer {
 		this.consumerConnector = consumerConnector;
 	}
 
-	public SparkJobSubmitter getSparkJobSubmitter() {
-		return this.sparkJobSubmitter;
+	public KafkaMessageHandler getKafkaMessageHandler() {
+		return this.kafkaMessageHandler;
 	}
 
-	public void setSparkJobSubmitter(final SparkJobSubmitter sparkJobSubmitter) {
-		this.sparkJobSubmitter = sparkJobSubmitter;
+	public void setKafkaMessageHandler(final KafkaMessageHandler sparkJobSubmitter) {
+		this.kafkaMessageHandler = sparkJobSubmitter;
 	}
 }

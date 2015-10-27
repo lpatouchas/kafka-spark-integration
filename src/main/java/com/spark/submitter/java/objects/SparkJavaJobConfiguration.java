@@ -12,6 +12,8 @@ public class SparkJavaJobConfiguration {
 
 	private String sparkHome;
 
+	private String appName;
+
 	public String getAppResource() {
 		return this.appResource;
 	}
@@ -50,6 +52,14 @@ public class SparkJavaJobConfiguration {
 
 	public void setSparkHome(final String sparkHome) {
 		this.sparkHome = sparkHome;
+	}
+
+	public String getAppName() {
+		return this.appName;
+	}
+
+	public void setAppName(final String appName) {
+		this.appName = appName;
 	}
 
 }

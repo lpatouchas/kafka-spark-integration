@@ -23,9 +23,9 @@ public class KafkaConsumerImpl extends AbstractKafkaConsumer {
 			stream.forEach(messageAndMetadata -> {//
 				System.out.println(new String(messageAndMetadata.message()));//
 				try {
-					this.sparkJobSubmitter.submitJob();
+					this.kafkaMessageHandler.handleMessage();
 					this.consumerConnector.commitOffsets();//
-					this.logger.info("Succesfully Submited Spark Job: {}", this.sparkJobSubmitter.getMainClass());//
+					this.logger.info("Succesfully Submited Spark Job: {}", this.kafkaMessageHandler.getHandlerInfo());//
 					this.logger.info("Kafka msg offset: {} ", messageAndMetadata.offset());
 				} catch (final Exception e) {
 					this.logger.error("Could not submit Spark Job, error: {}", e);

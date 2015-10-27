@@ -12,7 +12,8 @@
 	<context:component-scan base-package="com.kafka.producer" />
 
 	<import resource="sparkJobConfig.xml" />
-
+	
+	<!-- Rest Topics Consumer Configuration -->
 	<bean id="restConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
 			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -28,18 +29,23 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+    </bean>
+	
 	<bean id="restSubmitter" class="com.spark.submitter.rest.SparkRestJobSubmmiter">
 		<property name="createSubmissionRequest" ref="job1"></property>
+		<property name="checkJobStatusInterval" value="1000"></property>
 		<property name="outputTopic" value="rest-topic-output"></property>
+		<property name="restTemplate" ref="restTemplate"></property>
 	</bean>
 	
 	<bean id="restConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
 		<property name="topic" value="rest-topic-input"></property>
 		<property name="consumerConfig" ref="restConsumerConfig"></property>
-		<property name="sparkJobSubmitter" ref="restSubmitter"></property>
+		<property name="kafkaMessageHandler" ref="restSubmitter"></property>
 	</bean>
 	
-	<!--  JAVA consumer -->
+	<!--  JAVA Topics Consumer Configuration -->
 	<bean id="javaSubmitter" class="com.spark.submitter.java.SparkJavaJobSubmitter">
 		<property name="jobConfig" ref="javaJob1"></property>
 	</bean>
@@ -62,6 +68,19 @@
 	<bean id="javaConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
 		<property name="topic" value="java-topic-input"></property>
 		<property name="consumerConfig" ref="javaConsumerConfig"></property>
-		<property name="sparkJobSubmitter" ref="javaSubmitter"></property>
+		<property name="kafkaMessageHandler" ref="javaSubmitter"></property>
+	</bean>
+	
+	<!--  Intermediate topic consumer -->
+	<bean id="javaIntermediateJobSubmitter" class="com.kafka.producer.KafkaProducer">
+		<property name="key" value="someKey"></property>
+		<property name="msg" value="bla bla bla"></property>
+		<property name="topic" value="java-topic-output"></property>
+	</bean>
+	
+	<bean id="javaIntermediateConsumer" class="com.kafka.consumer.KafkaConsumerImpl">
+		<property name="topic" value="java-topic-intermediate"></property>
+		<property name="consumerConfig" ref="javaConsumerConfig"></property>
+		<property name="kafkaMessageHandler" ref="javaIntermediateJobSubmitter"></property>
 	</bean>
 </beans>
